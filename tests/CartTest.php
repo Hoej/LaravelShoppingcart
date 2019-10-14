@@ -2,6 +2,7 @@
 
 namespace Gloudemans\Tests\Shoppingcart;
 
+use Illuminate\Support\Facades\Auth;
 use Mockery;
 use PHPUnit\Framework\Assert;
 use Gloudemans\Shoppingcart\Cart;
@@ -56,7 +57,7 @@ class CartTest extends TestCase
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -79,7 +80,6 @@ class CartTest extends TestCase
         $cart = $this->getCart();
 
         $cart->add(new BuyableProduct(1, 'First item'));
-
         $cart->instance('wishlist')->add(new BuyableProduct(2, 'Second item'));
 
         $this->assertItemsInCart(1, $cart->instance(Cart::DEFAULT_INSTANCE));
@@ -913,7 +913,7 @@ class CartTest extends TestCase
 
         $user = Mockery::mock(Authenticatable::class);
 
-        event(new Logout($user));
+        event(new Logout('session', $user));
     }
 
     /**
